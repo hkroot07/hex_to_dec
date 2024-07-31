@@ -3,19 +3,24 @@ package main
 import (
 	"fmt"
 	"math/big"
-	"os"
 	"strings"
 )
 
 func main() {
 	var input string
-	fmt.Scanln(&input)
-	input = strings.ToLower(input)
-	if input == "stop" {
-		os.Exit(2)
+	for {
+		fmt.Scanln(&input)
+		input = strings.ToLower(input)
+		if input == "stop" {
+			break
+		}
+		i := new(big.Int)
+		if _, ok := i.SetString(processHex(input), 16); !ok {
+			fmt.Println("Invalid hexadecimal number!")
+			continue
+		}
+		fmt.Println(i)
 	}
-	i := new(big.Int)
-	i.SetString(input, 16)
 }
 
 func processHex(hexStr string) string {
